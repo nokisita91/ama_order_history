@@ -1,0 +1,87 @@
+<% require_relative './term_names' %>
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="default.css">
+
+    <style>
+      #loading {
+        display: none;
+        position: absolute;
+        left:30%;
+        top:30%;
+      }
+    </style>
+    
+    <%= javascript_pack_tag 'cookietest' %>
+
+    <script>
+      function collecting() {
+        document.getElementById("loading").style.display = "block";
+        document.getElementById("links").innerHTML = "";
+        document.getElementById("msg").innerHTML = "<p>しばらくお待ちください</p>";
+        document.collect_form.submit();
+        document.collect_form.term.disabled = true;
+        document.collect_form.account_mail.disabled = true;
+        document.collect_form.account_password.disabled = true;
+        document.collect_form.exec_btn.disabled = true;
+        
+        let reload;
+
+        if (!reload) {
+          reload = setInterval(cookieReload, 3000);
+        };
+
+        function cookieReload(){if (Cookies.get("exported")) {
+          Cookies.remove("exported");
+          console.log("更新！");
+          document.location.assign('collected.html');          
+        }};
+      }
+    </script>
+        
+    <title>Amazon履歴</title>
+  </head>
+
+  <body>
+    <h1>Amazon注文履歴</h1>
+    <h2>注文履歴の取得</h2>
+    <p id="links"><a href="index.html">メニューに戻る</a></p>
+    <p id="msg">注文期間とログイン情報を指定して「履歴を取得」を押してください。</p>
+    <hr>
+    <form method="post" action="collect_post" name="collect_form">
+      <table>
+        <tr>
+          <th>オプション項目名</th>
+          <th>オプションデータ</th>
+        </tr>
+        <tr>
+          <td>取得期間</td>
+          <td>
+            <select name="term" id="selector">
+              <% $term_names.each_pair do |key, val| %>
+                <option value= "<%= key %>"><%= val %></option>
+              <% end %>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>ログインメールアドレス</td>
+          <td><input type="text" name="account_mail" placeholder="メールアドレス"></td>
+          
+        </tr>
+        <tr>
+          <td>パスワード</td>
+          <td><input type="text" name="account_password" placeholder="パスワード"></td>
+        </tr>
+      </table>
+      <button class="exec_btn" name="exec_btn" onClick="collecting()">履歴を取得</button>
+    </form>
+    <div id="loading"><img src="/assets/loading.gif"></div>
+    <hr>
+  </body>
+</html>
+
+<!-- <td>アカウントファイル名</td> -->
+          <!-- <td><input type="text" name="account" 
+            value="/Users/issa/rubyfirst/ama_order_history/ama_order_history/app/controllers/account.json" ></td> -->

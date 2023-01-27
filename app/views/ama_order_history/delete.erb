@@ -1,0 +1,50 @@
+<%# encoding: utf-8 %>
+<% require_relative './term_names' %>
+<% files = Dir.glob("ohr-*.output")%>
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="default.css">
+    <script>
+      function deleting(fn) {
+        var msg = "履歴" + fn + "を削除してよろしいですか？" ;
+        if(window.confirm(msg)) {
+          return true;
+        } else {
+          return false;
+        }
+      }    
+    </script>
+    <title>Amazon履歴</title>
+  </head>
+  <body>
+    <h1>Amazon注文履歴</h1>
+    <h2>取得済み注文履歴の削除</h2>
+    <p id="links"><a href="list.erb">取得済み注文履歴一覧の表示</a> | <a href="index.html">メニューに戻る</a></p>
+    <p id="msg">削除したい注文履歴の「履歴を削除」を押してください。</p>
+    <hr>
+      <table>
+        <tr>
+          <th>&nbsp;</th><th>取得期間</th><th>保存ファイル名</th>
+        </tr>
+        <% $term_names.each do |key, val| %>
+          <% file = "ohr-#{key}.output" %>
+          <% if FileTest.exist?(file) %>
+            <tr>
+              <td>
+                <form method="post" action="delete" name="delete_form_<%= key %>" onSubmit="return deleting('<%= file %>')">
+                  <input type="hidden" name="term" value="<%= key %>">
+                  <input type="hidden" name="file" value="<%= file %>">
+                  <button class="exec_btn" type="submit">履歴を削除</button>
+                </form>
+              </td>
+              <td><%= val %></td>
+              <td><%= file %></td>
+            </tr>
+          <% end %>
+        <% end %>    
+      </table>  
+    <hr>
+  </body>
+</html>

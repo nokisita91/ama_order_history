@@ -1,0 +1,91 @@
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <!-- <link rel="stylesheet" type="text/css" href="default.css"> -->
+     
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script> -->
+    
+  <%= javascript_pack_tag 'cookietest' %>
+
+  <!-- <script>
+  /*
+    const sessionKey = "accesed";
+    const sessionValue = true;
+    
+    //sessionStorageにsessionKeyというデータの有無を判別
+    if (!sessionStorage.getItem(sessionKey)) {
+      //初回アクセス時の処理
+      document.getElementById("modal").style.display = "block";
+      document.querySelector(".c-btn").addEventListener("click", () => {
+        document.getElementById("modal").style.display = "none";
+        //sessionStorageにデータを追加
+        sessionStorage.setItem(sessionKey, sessionValue);
+      });
+    } else {
+      //ここに通常アクセス時の処理
+      console.log("アクセス済み");
+    }
+  */
+  </script> -->
+  
+  <script>
+  function clickTest(){
+    if (Cookies.get("login")) {
+      //document.location.reload();
+      document.location.assign('test2.html')
+      Cookies.remove("login");
+      console.log("更新！");
+    } else {
+      console.log("cookieなし");
+    }
+  };
+  </script>
+
+
+  <style>
+    .c-modal {
+      background-color: #eeeeee;
+      border-radius: 4px;
+    }
+
+    .c-modal__text {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .c-modal__btn {
+      background-color: #cfcfcf;
+      border-radius: 0 0 4px 4px;
+      padding: 12px 40px;
+    }
+
+    .c-btn {
+      background-color: #e45f2a;
+      border: none;
+      border-radius: 4px;
+      color: #ffffff;
+      display: block;
+      margin: auto;
+      padding: 12px 40px;
+    }
+
+    .l-modal {
+      left: 50%;
+      margin: auto;
+      position: fixed;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+
+  <title>test</title>
+</head>
+<body>
+  <div id= "overlay" class="c-modal l-modal">
+    <div class="c-modal__text">
+      <p class="">初回アクセス時のみ表示されます。</p>
+    </div>
+    <div class="c-modal__btn">
+       <button class="c-btn" onclick="clickTest();">reload</button>
+    </div>
+  </div>
+</body>

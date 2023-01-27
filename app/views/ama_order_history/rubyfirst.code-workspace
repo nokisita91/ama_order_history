@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../../../.."
+		},
+		{
+			"path": "../../../../../../rails-todo-sample"
+		},
+		{
+			"path": "../../../../../../sample_app"
+		}
+	],
+	"settings": {}
+}
