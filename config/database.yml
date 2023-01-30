@@ -23,3 +23,10 @@ test:
 production:
   <<: *default
   database: db/production.sqlite3
+
+production:
+  <<: *default
+  database: ama_order_history_production
+  username: root
+  password: <%= ENV['normal3210'] %>
+  socket: /var/lib/mysql/mysql.sock
